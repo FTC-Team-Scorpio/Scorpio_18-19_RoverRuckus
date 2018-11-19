@@ -24,18 +24,22 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
     public void runOpMode () {
         //Map the sensors
         //imu = hardwareMap.get(Gyroscope.class, "imu");
+
+        //Initalize Motors
         motorTest = hardwareMap.get(DcMotor.class, "motorTest");
         leftmotor = motorTest;
         motor2 = hardwareMap.get(DcMotor.class, "motor2");
         rightmotor = motor2;
+
         /*digitalTouch = hardwareMap.get(DigitalChannel.class, "digitalTouch");
         sensorColorRange = hardwareMap.get(DistanceSensor.class, "sensorColorRange");
         servoTest = hardwareMap.get(Servo.class, "servoTest");*/
-        //Create a variable to store gamepad
+
+        //Wait for Start
         waitForStart();
         while (opModeIsActive()) {
             newmotor(); //Control the basic drivetrain using the controller (Refer to newmotor function)
-            servoMotor();
+            servoMotor(); //Do the servos
         }
     }
 
