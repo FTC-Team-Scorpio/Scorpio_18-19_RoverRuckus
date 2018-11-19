@@ -39,7 +39,7 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         waitForStart();
         while (opModeIsActive()) {
             newmotor(); //Control the basic drivetrain using the controller (Refer to newmotor function)
-            servoMotor(); //Do the servos
+            //servoMotor(); //Do the servos
         }
     }
 
