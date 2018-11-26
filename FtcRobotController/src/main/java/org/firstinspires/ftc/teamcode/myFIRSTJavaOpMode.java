@@ -77,8 +77,8 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
             else if (gamepad1.left_stick_x < 0) {
                 leftspeed *= -1;
             }
-            rightmotor.setPower(rightspeed);
-            leftmotor.setPower(leftspeed);
+            rightmotor.setPower(rightspeed * -1);
+            leftmotor.setPower(leftspeed * -1);
 
         }
         //If left joystick back
@@ -95,20 +95,20 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
             else if (gamepad1.left_stick_x < 0) {
                 leftspeed *= -1;
             }
-            leftmotor.setPower(leftspeed);
+            leftmotor.setPower(leftspeed * -1);
             //Set right motor to base speed times -1 because backward (Extra -1 based on clockwise/counter-clockwise)
-            rightmotor.setPower(rightspeed);
+            rightmotor.setPower(rightspeed  * -1);
         }
         //If left joystick in center
         else if (gamepad1.a){
             //Set left motor to base speed (going straight)
-            leftmotor.setPower(base);
+            leftmotor.setPower(base * -1);
             //Set right motor to base speed (going straight) (Extra -1 based on clockwise/counter-clockwise)
-            rightmotor.setPower(base * -1);
+            rightmotor.setPower(base * -1 * -1);
         }
         else if (gamepad1.y) {
-            leftmotor.setPower(base * -1);
-            rightmotor.setPower(base);
+            leftmotor.setPower(base * -1 * -1);
+            rightmotor.setPower(base * -1);
         }
         else {
             //Set left motor to base speed plus the turn
