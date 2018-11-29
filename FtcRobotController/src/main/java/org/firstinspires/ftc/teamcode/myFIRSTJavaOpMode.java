@@ -69,7 +69,8 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
             double leftspeed =  Range.scale(base /*+ gamepad1.left_stick_x*/,-2.3,2.3,-1,1);
             double rightspeed = Range.scale(base * -1,-2.3,2.3,-1,1);
             if (gamepad1.left_stick_x >= -0.1 && gamepad1.left_stick_x <= 0.1) {
-
+                rightspeed *= -1;
+                leftspeed *= -1;
             }
             else if (gamepad1.left_stick_x > 0) {
                 rightspeed *= -1;
@@ -87,7 +88,8 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
             double leftspeed = Range.scale((base /*+ gamepad1.left_stick_x*/) * -1,-2.3,2.3,-1,1);
             double rightspeed = Range.scale(base * -1 * -1, -2.3,2.3,-1,1);
             if (gamepad1.left_stick_x >= -0.1 && gamepad1.left_stick_x <= 0.1) {
-
+                rightspeed *= -1;
+                leftspeed *= -1;
             }
             else if (gamepad1.left_stick_x > 0) {
                 rightspeed *= -1;
@@ -97,18 +99,18 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
             }
             leftmotor.setPower(leftspeed * -1);
             //Set right motor to base speed times -1 because backward (Extra -1 based on clockwise/counter-clockwise)
-            rightmotor.setPower(rightspeed  * -1);
+            rightmotor.setPower(rightspeed * -1);
         }
         //If left joystick in center
         else if (gamepad1.a){
             //Set left motor to base speed (going straight)
-            leftmotor.setPower(base * -1);
+            leftmotor.setPower(base);
             //Set right motor to base speed (going straight) (Extra -1 based on clockwise/counter-clockwise)
-            rightmotor.setPower(base * -1 * -1);
+            rightmotor.setPower(base * -1);
         }
         else if (gamepad1.y) {
-            leftmotor.setPower(base * -1 * -1);
-            rightmotor.setPower(base * -1);
+            leftmotor.setPower(base * -1);
+            rightmotor.setPower(base);
         }
         else {
             //Set left motor to base speed plus the turn
