@@ -13,6 +13,7 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
     private DcMotor motor2;
     private DcMotor leftmotor;
     private DcMotor rightmotor;
+    private DcMotor motor3;
     double tgtPower = 0;
     double tgtpower2 = 0;
     /*private DigitalChannel digitalTouch;
@@ -30,7 +31,7 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         leftmotor = motorTest;
         motor2 = hardwareMap.get(DcMotor.class, "motor2");
         rightmotor = motor2;
-
+        motor3 = hardwareMap.get(DcMotor.class, "atach");
         /*digitalTouch = hardwareMap.get(DigitalChannel.class, "digitalTouch");
         sensorColorRange = hardwareMap.get(DistanceSensor.class, "sensorColorRange");
         servoTest = hardwareMap.get(Servo.class, "servoTest");*/
@@ -40,6 +41,7 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         while (opModeIsActive()) {
             newmotor(); //Control the basic drivetrain using the controller (Refer to newmotor function)
             //servoMotor(); //Do the servos
+            landing();
         }
     }
 
@@ -130,5 +132,16 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
     public void servoMotor () {
         Servo servo1 = hardwareMap.get(Servo.class, "servo1");
         servo1.setPosition(Range.scale(gamepad2.left_stick_x,-1,1,0,1));
+    }
+    public void landing () {
+        if (gamepad2.a) {
+            motor3.setPower(1);
+        }
+        else if (gamepad2.y) {
+            motor3.setPower(1);
+        }
+        else {
+            motor3.setPower(0);
+        }
     }
 }
