@@ -40,8 +40,9 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         waitForStart();
         while (opModeIsActive()) {
             newmotor(); //Control the basic drivetrain using the controller (Refer to newmotor function)
-            //servoMotor(); //Do the servos
+            servoMotor(); //Do the servos
             landing();
+            arm();
         }
     }
 
@@ -124,6 +125,8 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
     public void servoMotor () {
         Servo servo1 = hardwareMap.get(Servo.class, "servo1");
         servo1.setPosition(Range.scale(gamepad2.left_stick_x,-1,1,0,1));
+        telemetry.addData("DA ONE (SERVO POS)", Range.scale(gamepad2.left_stick_x,-1,1,0,1));
+        telemetry.update();
     }
     public void landing () {
         if (gamepad2.a) {
@@ -134,6 +137,18 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         }
         else {
             motor3.setPower(0);
+        }
+    }
+    public void arm () {
+        DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
+        if (gamepad2.x) {
+            arm.setPower(0.2);
+        }
+        else if (gamepad2.b) {
+            arm.setPower(-0.2);
+        }
+        else {
+            arm.setPower(0);
         }
     }
 }
