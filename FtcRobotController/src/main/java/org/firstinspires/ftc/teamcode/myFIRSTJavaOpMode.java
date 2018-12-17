@@ -9,10 +9,10 @@ import com.qualcomm.robotcore.util.Range;
 public class myFIRSTJavaOpMode extends LinearOpMode{
     //Create Variables
     //private Gyroscope imu;
-    private DcMotor motorTest;
-    private DcMotor motor2;
     private DcMotor leftmotor;
     private DcMotor rightmotor;
+    private DcMotor leftmotor2;
+    private DcMotor rightmotor2;
     private DcMotor motor3;
     double tgtPower = 0;
     double tgtpower2 = 0;
@@ -27,10 +27,10 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         //imu = hardwareMap.get(Gyroscope.class, "imu");
 
         //Initalize Motors
-        motorTest = hardwareMap.get(DcMotor.class, "motorTest");
-        leftmotor = motorTest;
-        motor2 = hardwareMap.get(DcMotor.class, "motor2");
-        rightmotor = motor2;
+        leftmotor = hardwareMap.get(DcMotor.class, "motorTest");
+        rightmotor = hardwareMap.get(DcMotor.class, "motor2");
+        leftmotor2 = hardwareMap.get(DcMotor.class, "leftmotor2"); //MECANUM
+        rightmotor2 = hardwareMap.get(DcMotor.class, "rightmotor2"); //MECANUM
         motor3 = hardwareMap.get(DcMotor.class, "atach");
         /*digitalTouch = hardwareMap.get(DigitalChannel.class, "digitalTouch");
         sensorColorRange = hardwareMap.get(DistanceSensor.class, "sensorColorRange");
@@ -43,6 +43,7 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
             servoMotor(); //Do the servos
             landing();
             arm();
+            mecanum();
         }
     }
 
@@ -50,13 +51,13 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         tgtPower = this.gamepad1.left_stick_y;
         tgtpower2 = -this.gamepad1.right_stick_y;
         //Set the motor according to the gamepad
-        motorTest.setPower(tgtPower);
-        motor2.setPower(tgtpower2);
+        leftmotor.setPower(tgtPower);
+        rightmotor.setPower(tgtpower2);
         //Display the target motor power
         telemetry.addData("Target Power", tgtPower);
         telemetry.addData("X Axis", this.gamepad1.left_stick_x);
         //Display the actual motor power
-        telemetry.addData("Motor Power", motorTest.getPower());
+        telemetry.addData("Motor Power", leftmotor.getPower());
         //Display that the status is running
         telemetry.addData("Status", "Running");
         //Update the screen
@@ -78,7 +79,9 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
                 leftspeed *= -1;
             }
             rightmotor.setPower(rightspeed * -1 * 2);
+            rightmotor2.setPower(rightspeed * -1 * 2); //MECANUM
             leftmotor.setPower(leftspeed * -1 * 2);
+            leftmotor2.setPower(leftspeed * -1 * 2); //MECANUM
 
         }
         //If left joystick back
@@ -93,25 +96,33 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
                 leftspeed *= -1;
             }
             leftmotor.setPower(leftspeed * -1 * 2);
+            leftmotor2.setPower(leftspeed * -1 * 2); //MECANUM
             //Set right motor to base speed times -1 because backward (Extra -1 based on clockwise/counter-clockwise)
             rightmotor.setPower(rightspeed * -1 * 2);
+            rightmotor2.setPower(rightspeed * -1 * 2); //MECANUM
         }
         //If left joystick in center
         else if (gamepad1.a){
             //Set left motor to base speed (going straight)
             leftmotor.setPower(base);
+            leftmotor2.setPower(base); //MECANUM
             //Set right motor to base speed (going straight) (Extra -1 based on clockwise/counter-clockwise)
             rightmotor.setPower(base * -1);
+            rightmotor2.setPower(base * -1); //MECANUM
         }
         else if (gamepad1.y) {
             leftmotor.setPower(base * -1);
-            rightmotor.setPower(base);
+            rightmotor.setPower(base); //MECANUM
+            leftmotor2.setPower(base * -1);
+            rightmotor2.setPower(base); //MECANUM
         }
         else {
             //Set left motor to base speed plus the turn
             leftmotor.setPower(0);
+            leftmotor2.setPower(0); //MECANUM
             //Set right motor to base speed (Extra -1 based on clockwise/counter-clockwise)
             rightmotor.setPower(0);
+            rightmotor2.setPower(0); //MECANUM
         }
         //Print everything
         telemetry.addData("Left Joystick X", gamepad1.left_stick_x);
@@ -149,6 +160,21 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         }
         else {
             arm.setPower(0);
+        }
+    }
+    public void mecanum () {
+        double base = Range.scale((gamepad1.right_stick_y*-1) + 1.3,0.3,1.3, 0,0.4);
+        if (gamepad1.left_trigger != 0) {
+            leftmotor.setPower(base * -1);
+            rightmotor.setPower(base);
+            leftmotor2.setPower(base);
+            rightmotor2.setPower(base * -1);
+        }
+        else if (gamepad1.right_trigger != 0) {
+            leftmotor.setPower(base);
+            rightmotor.setPower(base * -1);
+            leftmotor2.setPower(base * -1);
+            rightmotor2.setPower(base);
         }
     }
 }
