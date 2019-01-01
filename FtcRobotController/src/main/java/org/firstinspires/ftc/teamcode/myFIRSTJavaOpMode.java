@@ -27,8 +27,8 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         //imu = hardwareMap.get(Gyroscope.class, "imu");
 
         //Initalize Motors
-        leftmotor = hardwareMap.get(DcMotor.class, "motorTest");
-        rightmotor = hardwareMap.get(DcMotor.class, "motor2");
+        leftmotor = hardwareMap.get(DcMotor.class, "leftmotor");
+        rightmotor = hardwareMap.get(DcMotor.class, "rightmotor");
         leftmotor2 = hardwareMap.get(DcMotor.class, "leftmotor2"); //MECANUM
         rightmotor2 = hardwareMap.get(DcMotor.class, "rightmotor2"); //MECANUM
         motor3 = hardwareMap.get(DcMotor.class, "atach");
@@ -103,18 +103,18 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         }
         //If left joystick in center
         else if (gamepad1.a){
+            leftmotor.setPower(base * -1);
+            rightmotor.setPower(base); //MECANUM
+            leftmotor2.setPower(base * -1);
+            rightmotor2.setPower(base); //MECANUM
+        }
+        else if (gamepad1.y) {
             //Set left motor to base speed (going straight)
             leftmotor.setPower(base);
             leftmotor2.setPower(base); //MECANUM
             //Set right motor to base speed (going straight) (Extra -1 based on clockwise/counter-clockwise)
             rightmotor.setPower(base * -1);
             rightmotor2.setPower(base * -1); //MECANUM
-        }
-        else if (gamepad1.y) {
-            leftmotor.setPower(base * -1);
-            rightmotor.setPower(base); //MECANUM
-            leftmotor2.setPower(base * -1);
-            rightmotor2.setPower(base); //MECANUM
         }
         else {
             //Set left motor to base speed plus the turn
@@ -166,15 +166,15 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         double base = Range.scale((gamepad1.right_stick_y*-1) + 1.3,0.3,1.3, 0,0.4);
         if (gamepad1.left_trigger != 0) {
             leftmotor.setPower(base * -1);
-            rightmotor.setPower(base);
+            rightmotor.setPower(base * -1);
             leftmotor2.setPower(base);
-            rightmotor2.setPower(base * -1);
+            rightmotor2.setPower(base);
         }
         else if (gamepad1.right_trigger != 0) {
             leftmotor.setPower(base);
-            rightmotor.setPower(base * -1);
+            rightmotor.setPower(base);
             leftmotor2.setPower(base * -1);
-            rightmotor2.setPower(base);
+            rightmotor2.setPower(base * -1);
         }
     }
 }

@@ -12,9 +12,9 @@ public class AutonomousClaiming extends LinearOpMode{
     public void runOpMode() {
         waitForStart();
         //Init
-        motorTest = hardwareMap.get(DcMotor.class, "motorTest");
+        motorTest = hardwareMap.get(DcMotor.class, "leftmotor");
         leftmotor = motorTest;
-        motor2 = hardwareMap.get(DcMotor.class, "motor2");
+        motor2 = hardwareMap.get(DcMotor.class, "rightmotor");
         rightmotor = motor2;
         //Straight
         leftmotor.setPower(-0.5);
