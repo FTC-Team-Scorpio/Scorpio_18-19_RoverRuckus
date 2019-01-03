@@ -153,10 +153,10 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
     public void arm () {
         DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
         if (gamepad2.x) {
-            arm.setPower(-0.3);
+            arm.setPower(-0.4);
         }
         else if (gamepad2.b) {
-            arm.setPower(0.3);
+            arm.setPower(0.4);
         }
         else {
             arm.setPower(0);

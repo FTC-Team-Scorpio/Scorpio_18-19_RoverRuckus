@@ -1,0 +1,57 @@
+package org.firstinspires.ftc.teamcode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+
+@Autonomous
+public class AutonomousLanding1 extends LinearOpMode{
+    private DcMotor leftmotor;
+    private DcMotor rightmotor;
+    private DcMotor leftmotor2;
+    private DcMotor rightmotor2;
+    public void runOpMode() {
+        waitForStart();
+        //Init
+        leftmotor = hardwareMap.get(DcMotor.class, "leftmotor");
+        rightmotor = hardwareMap.get(DcMotor.class, "rightmotor");
+        leftmotor2 = hardwareMap.get(DcMotor.class, "leftmotor");
+        rightmotor2 = hardwareMap.get(DcMotor.class, "rightmotor");
+        DcMotor motor3 = hardwareMap.get(DcMotor.class, "atach");
+        double base = 0.6;
+        //Go Down
+        //motor3.setPower(1);
+        //sleep(9000);
+        //Go Forwards
+        leftmotor.setPower(base);
+        leftmotor2.setPower(base);
+        rightmotor.setPower(base * -1);
+        rightmotor2.setPower(base * -1);
+        sleep(1500);
+        //Go right Sideways
+        leftmotor.setPower(base * -1);
+        rightmotor.setPower(base * -1);
+        leftmotor2.setPower(base);
+        rightmotor2.setPower(base);
+        sleep(3700);
+        //ONWARDS AND FORWARDS
+        leftmotor.setPower(base);
+        leftmotor2.setPower(base);
+        rightmotor.setPower(base * -1);
+        rightmotor2.setPower(base * -1);
+        sleep(8000);
+        //Stop
+        leftmotor.setPower(0);
+        leftmotor2.setPower(0);
+        rightmotor.setPower(0);
+        rightmotor2.setPower(0);
+        //Claim
+        Servo servo0 = hardwareMap.get(Servo.class, "servo0");
+        servo0.setPosition(180);
+        sleep(1000);
+        leftmotor.setPower(0.5);
+        rightmotor.setPower(-0.5);
+        sleep(1000);
+    }
+}
+
