@@ -44,9 +44,21 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
             landing();
             arm();
             mecanum();
+            spinner();
         }
     }
-
+    public void spinner () {
+        DcMotor spinner = hardwareMap.get(DcMotor.class, "atach2");
+        if (gamepad2.right_trigger != 0) {
+            spinner.setPower(1);
+        }
+        else if (gamepad2.left_trigger != 0) {
+            spinner.setPower(-1);
+        }
+        else {
+            spinner.setPower(0);
+        }
+    }
     public void oldmotor () {
         tgtPower = this.gamepad1.left_stick_y;
         tgtpower2 = -this.gamepad1.right_stick_y;
@@ -135,8 +147,8 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
     }
     public void servoMotor () {
         Servo servo1 = hardwareMap.get(Servo.class, "servo1");
-        servo1.setPosition(Range.scale(gamepad2.left_stick_x,-1,1,0,1));
-        telemetry.addData("DA ONE (SERVO POS)", Range.scale(gamepad2.left_stick_x,-1,1,0,1));
+        servo1.setPosition(Range.scale(gamepad2.left_stick_x,-1,1,0.5,1));
+        telemetry.addData("DA ONE (SERVO POS)", Range.scale(gamepad2.left_stick_x,-1,1,0.5,1));
         telemetry.update();
     }
     public void landing () {

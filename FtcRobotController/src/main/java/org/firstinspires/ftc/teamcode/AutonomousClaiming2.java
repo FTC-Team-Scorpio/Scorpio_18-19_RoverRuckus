@@ -35,7 +35,7 @@ public class AutonomousClaiming2 extends LinearOpMode{
         leftmotor.setPower(0);
         rightmotor.setPower(0);
         Servo servo0 = hardwareMap.get(Servo.class, "servo0");
-        servo0.setPosition(180);
+        servo0.setPosition(1);
         sleep(1000);
         leftmotor.setPower(0.5);
         rightmotor.setPower(-0.5);
