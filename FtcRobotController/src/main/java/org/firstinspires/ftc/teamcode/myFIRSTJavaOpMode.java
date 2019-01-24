@@ -40,22 +40,35 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         waitForStart();
         while (opModeIsActive()) {
             newmotor(); //Control the basic drivetrain using the controller (Refer to newmotor function)
-            servoMotor(); //Do the servos
+            //servoMotor(); //Do the servos
             landing();
             arm();
             mecanum();
             spinner();
+            armmove();
+        }
+    }
+    public void armmove () {
+        DcMotor atach2 = hardwareMap.get(DcMotor.class, "atach2");
+        if (gamepad2.dpad_left) {
+            atach2.setPower(0.4);
+        }
+        else if (gamepad2.dpad_right) {
+            atach2.setPower(-0.4);
+        }
+        else {
+            atach2.setPower(0);
         }
     }
     public void spinner () {
-        DcMotor spinner = hardwareMap.get(DcMotor.class, "atach2");
+        CRServo spinner = hardwareMap.get(CRServo.class, "spinner");
         if (gamepad2.right_trigger != 0) {
             spinner.setPower(1);
         }
         else if (gamepad2.left_trigger != 0) {
             spinner.setPower(-1);
         }
-        else {
+        else if (gamepad2.right_bumper) {
             spinner.setPower(0);
         }
     }
@@ -75,11 +88,10 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         //Update the screen
         telemetry.update();
     }
-
     public void newmotor () {
         //Set the base to the y of the speed joystick (add 1.5 because range is -1 to 0) which is speed
         //not accounting for the turn
-        double base = Range.scale((gamepad1.right_stick_y*-1) + 1.3,0.3,1.3, 0,0.4);
+        double base = Range.scale((gamepad1.right_stick_y*-1) + 1.3,0.3,1.3, 0,0.8);
         //If left joystick forward
         if (gamepad1.left_stick_y > 0) {
             double leftspeed =  Range.scale(base /*+ gamepad1.left_stick_x*/,-2.3,2.3,-1,1);
@@ -90,10 +102,10 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
             else if (gamepad1.left_stick_x < 0) {
                 leftspeed *= -1;
             }
-            rightmotor.setPower(rightspeed * -1 * 2);
-            rightmotor2.setPower(rightspeed * -1 * 2); //MECANUM
-            leftmotor.setPower(leftspeed * -1 * 2);
-            leftmotor2.setPower(leftspeed * -1 * 2); //MECANUM
+            rightmotor.setPower(rightspeed * -1);
+            rightmotor2.setPower(rightspeed * -1); //MECANUM
+            leftmotor.setPower(leftspeed * -1);
+            leftmotor2.setPower(leftspeed * -1); //MECANUM
 
         }
         //If left joystick back
@@ -107,11 +119,11 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
             else if (gamepad1.left_stick_x < 0) {
                 leftspeed *= -1;
             }
-            leftmotor.setPower(leftspeed * -1 * 2);
-            leftmotor2.setPower(leftspeed * -1 * 2); //MECANUM
+            leftmotor.setPower(leftspeed * -1);
+            leftmotor2.setPower(leftspeed * -1); //MECANUM
             //Set right motor to base speed times -1 because backward (Extra -1 based on clockwise/counter-clockwise)
-            rightmotor.setPower(rightspeed * -1 * 2);
-            rightmotor2.setPower(rightspeed * -1 * 2); //MECANUM
+            rightmotor.setPower(rightspeed * -1);
+            rightmotor2.setPower(rightspeed * -1); //MECANUM
         }
         //If left joystick in center
         else if (gamepad1.a){
@@ -147,16 +159,16 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
     }
     public void servoMotor () {
         Servo servo1 = hardwareMap.get(Servo.class, "servo1");
-        servo1.setPosition(Range.scale(gamepad2.left_stick_x,-1,1,0.5,1));
+        servo1.setPosition(Range.scale(gamepad2.left_stick_x,-1,1,0,1));
         telemetry.addData("DA ONE (SERVO POS)", Range.scale(gamepad2.left_stick_x,-1,1,0.5,1));
         telemetry.update();
     }
     public void landing () {
         if (gamepad2.a) {
-            motor3.setPower(1);
+            motor3.setPower(-1);
         }   
         else if (gamepad2.y) {
-            motor3.setPower(-1);
+            motor3.setPower(1);
         }
         else {
             motor3.setPower(0);
@@ -165,12 +177,13 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
     public void arm () {
         DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
         if (gamepad2.x) {
-            arm.setPower(-0.4);
+            arm.setPower(-0.6);
         }
         else if (gamepad2.b) {
-            arm.setPower(0.4);
+            arm.setPower(0.6);
         }
         else {
+            arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             arm.setPower(0);
         }
     }

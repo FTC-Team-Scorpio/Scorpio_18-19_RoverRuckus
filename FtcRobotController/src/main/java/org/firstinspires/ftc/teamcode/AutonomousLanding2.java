@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous
-public class AutonomousLanding1 extends LinearOpMode{
+public class AutonomousLanding2 extends LinearOpMode {
     private DcMotor leftmotor;
     private DcMotor rightmotor;
     private DcMotor leftmotor2;
@@ -29,47 +30,28 @@ public class AutonomousLanding1 extends LinearOpMode{
         rightmotor.setPower(base * -1);
         rightmotor2.setPower(base * -1);
         sleep(750);
-        //Go right Sideways
+        //Turn Left
         leftmotor.setPower(base);
+        leftmotor2.setPower(base);
         rightmotor.setPower(base);
-        leftmotor2.setPower(base * -1);
-        rightmotor2.setPower(base * -1);
-        sleep(6000);
-        //Stop
-        leftmotor.setPower(0);
-        leftmotor2.setPower(0);
-        rightmotor.setPower(0);
-        rightmotor2.setPower(0);
-        //Claim
-        Servo servo0 = hardwareMap.get(Servo.class, "servo0");
-        servo0.setPosition(1);
-        sleep(1000);
-        leftmotor.setPower(0.5);
-        rightmotor.setPower(-0.5);
+        rightmotor2.setPower(base);
         sleep(1500);
-        //Turn Right (To be straight)
+        //Go Forwards
         leftmotor.setPower(base);
         leftmotor2.setPower(base);
-        rightmotor.setPower(base);
-        rightmotor2.setPower(base);
-        sleep(500);
-        //Back Out
-        leftmotor.setPower(base * -1);
-        leftmotor2.setPower(base * -1);
-        rightmotor.setPower(base);
-        rightmotor2.setPower(base);
-        sleep(1000);
-        //Move Sideways Left
-        leftmotor.setPower(base * -1);
         rightmotor.setPower(base * -1);
-        leftmotor2.setPower(base);
-        rightmotor2.setPower(base);
-        sleep(4000);
+        rightmotor2.setPower(base * -1);
+        sleep(2500);
         //Stop
         leftmotor.setPower(0);
         leftmotor2.setPower(0);
         rightmotor.setPower(0);
         rightmotor2.setPower(0);
+        //Move arm down
+        DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
+        arm.setPower(0.4);
+        sleep(3000);
+        //Reset the Arm
+        arm.setPower(0);
     }
 }
-
