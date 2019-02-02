@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.function.Consumer;
@@ -21,6 +22,8 @@ import java.util.List;
 
 @Autonomous
 public class GOLDorSILVER extends LinearOpMode {
+    int gold = 0;
+    int silver = 0;
     //Create a object that will detect minerals
     private TFObjectDetector tfod;
     //Create Vuforia Object
@@ -35,7 +38,53 @@ public class GOLDorSILVER extends LinearOpMode {
         initTFOD();
         //Wait until driver presses "Start"
         waitForStart();
-        //Run while the OP Mode is running
+        //Init
+        DcMotor leftmotor = hardwareMap.get(DcMotor.class, "leftmotor");
+        DcMotor rightmotor = hardwareMap.get(DcMotor.class, "rightmotor");
+        DcMotor leftmotor2 = hardwareMap.get(DcMotor.class, "leftmotor2");
+        DcMotor rightmotor2 = hardwareMap.get(DcMotor.class, "rightmotor2");
+        DcMotor motor3 = hardwareMap.get(DcMotor.class, "atach");
+        double base = 0.6;
+        //Go Down
+        motor3.setPower(1);
+        sleep(9750);
+        motor3.setPower(0);
+        //Go Forwards
+        leftmotor.setPower(base);
+        leftmotor2.setPower(base);
+        rightmotor.setPower(base * -1);
+        rightmotor2.setPower(base * -1);
+        sleep(750);
+        //Turn Left
+        leftmotor.setPower(base);
+        leftmotor2.setPower(base);
+        rightmotor.setPower(base);
+        rightmotor2.setPower(base);
+        sleep(1250);
+        //Sideways Right
+        leftmotor.setPower(base);
+        rightmotor.setPower(base);
+        leftmotor2.setPower(base * -1);
+        rightmotor2.setPower(base * -1);
+        sleep(650);
+        //Stop
+        leftmotor.setPower(0);
+        leftmotor2.setPower(0);
+        rightmotor.setPower(0);
+        rightmotor2.setPower(0);
+        //Move straight a bit
+        leftmotor.setPower(base);
+        leftmotor2.setPower(base);
+        rightmotor.setPower(base * -1);
+        rightmotor2.setPower(base * -1);
+        sleep(200);
+        //Stop IT!
+        leftmotor.setPower(0);
+        leftmotor2.setPower(0);
+        rightmotor.setPower(0);
+        rightmotor2.setPower(0);
+        //Check
+        sleep(1000);
         while (opModeIsActive()) {
             //Activate TensorFlow
             tfod.activate();
@@ -46,25 +95,45 @@ public class GOLDorSILVER extends LinearOpMode {
                 //Restart loop
                 continue;
             }
-            //Initalize Amount of Gold and Silver Variables
-            int gold = 0;
-            int silver = 0;
             //For every new identified object
             for (Recognition object : objects) {
                 //If the object is gold then add one to gold variable
                 if (object.getLabel().equals("Gold Mineral")) {
-                    gold++;
+                    gold = 1;
                 }
                 //If the object is silver then add one to silver variable
                 if (object.getLabel().equals("Silver Mineral")) {
-                    silver++;
+                    silver = 1;
                 }
             }
-            //Add the gold and silver data to the screen
-            telemetry.addData("Gold Minerals: ", gold);
-            telemetry.addData("Silver Minerals: ",silver);
-            telemetry.update();
+            if (gold == 1 || silver == 1) {
+                break;
+            }
         }
+        telemetry.addData("Gold Minerals: ", gold);
+        telemetry.addData("Silver Minerals: ", silver);
+        telemetry.update();
+        check();
+        if (gold == 1) {
+            //Go Forwards
+            leftmotor.setPower(base);
+            leftmotor2.setPower(base);
+            rightmotor.setPower(base * -1);
+            rightmotor2.setPower(base * -1);
+            sleep(2250);
+            //Stop
+            leftmotor.setPower(0);
+            leftmotor2.setPower(0);
+            rightmotor.setPower(0);
+            rightmotor2.setPower(0);
+            //Move arm down
+            DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
+            arm.setPower(0.4);
+            sleep(3000);
+            //Reset the Arm
+            arm.setPower(0);
+        }
+        sleep(10000);
     }
     public void initVuforia () {
         //Create Vuforia Paramters Object
@@ -86,5 +155,28 @@ public class GOLDorSILVER extends LinearOpMode {
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         //Load the models of the gold and silver minerals
         tfod.loadModelFromAsset("RoverRuckus.tflite", "Gold Mineral", "Silver Mineral");
+    }
+    public int check () {
+        //Activate TensorFlow
+        tfod.activate();
+        //Create a list of all new recognized objects
+        List<Recognition> objects = tfod.getUpdatedRecognitions();
+        //If there is no new recognized objects
+        if (objects == null) {
+            //Restart loop
+            return 0;
+        }
+        //For every new identified object
+        for (Recognition object : objects) {
+            //If the object is gold then add one to gold variable
+            if (object.getLabel().equals("Gold Mineral")) {
+                gold = 1;
+            }
+            //If the object is silver then add one to silver variable
+            if (object.getLabel().equals("Silver Mineral")) {
+                silver = 1;
+            }
+        }
+        return 0;
     }
 }
