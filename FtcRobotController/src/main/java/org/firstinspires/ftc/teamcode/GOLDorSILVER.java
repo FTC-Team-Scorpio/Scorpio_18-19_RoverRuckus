@@ -37,7 +37,33 @@ public class GOLDorSILVER extends LinearOpMode {
         waitForStart();
         //Run while the OP Mode is running
         while (opModeIsActive()) {
-
+            //Activate TensorFlow
+            tfod.activate();
+            //Create a list of all new recognized objects
+            List<Recognition> objects = tfod.getUpdatedRecognitions();
+            //If there is no new recognized objects
+            if (objects == null) {
+                //Restart loop
+                continue;
+            }
+            //Initalize Amount of Gold and Silver Variables
+            int gold = 0;
+            int silver = 0;
+            //For every new identified object
+            for (Recognition object : objects) {
+                //If the object is gold then add one to gold variable
+                if (object.getLabel().equals("Gold Mineral")) {
+                    gold++;
+                }
+                //If the object is silver then add one to silver variable
+                if (object.getLabel().equals("Silver Mineral")) {
+                    silver++;
+                }
+            }
+            //Add the gold and silver data to the screen
+            telemetry.addData("Gold Minerals: ", gold);
+            telemetry.addData("Silver Minerals: ",silver);
+            telemetry.update();
         }
     }
     public void initVuforia () {
