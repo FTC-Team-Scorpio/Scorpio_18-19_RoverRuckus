@@ -1,12 +1,21 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.content.Context;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.function.Consumer;
+import org.firstinspires.ftc.robotcore.external.function.Continuation;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.Camera;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.CameraCharacteristics;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.CameraName;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 
 import java.util.List;
 
@@ -28,33 +37,7 @@ public class GOLDorSILVER extends LinearOpMode {
         waitForStart();
         //Run while the OP Mode is running
         while (opModeIsActive()) {
-            //Activate TensorFlow
-            tfod.activate();
-            //Create a list of all new recognized objects
-            List<Recognition> objects = tfod.getUpdatedRecognitions();
-            //If there is no new recognized objects
-            if (objects == null) {
-                //Restart loop
-                continue;
-            }
-            //Initalize Amount of Gold and Silver Variables
-            int gold = 0;
-            int silver = 0;
-            //For every new identified object
-            for (Recognition object : objects) {
-                //If the object is gold then add one to gold variable
-                if (object.getLabel().equals("Gold Mineral")) {
-                    gold++;
-                }
-                //If the object is silver then add one to silver variable
-                if (object.getLabel().equals("Silver Mineral")) {
-                    silver++;
-                }
-            }
-            //Add the gold and silver data to the screen
-            telemetry.addData("Gold Minerals: ", gold);
-            telemetry.addData("Silver Minerals: ",silver);
-            telemetry.update();
+
         }
     }
     public void initVuforia () {
@@ -64,7 +47,6 @@ public class GOLDorSILVER extends LinearOpMode {
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
         //Initalize the Camera Direction
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
-
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
     }
