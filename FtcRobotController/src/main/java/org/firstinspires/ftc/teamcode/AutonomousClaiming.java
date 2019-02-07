@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.Range;
 @Autonomous
+@Disabled
 public class AutonomousClaiming extends LinearOpMode{
     private DcMotor motorTest;
     private DcMotor motor2;

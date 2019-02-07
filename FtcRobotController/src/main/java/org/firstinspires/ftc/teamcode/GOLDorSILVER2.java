@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import android.content.Context;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -21,10 +22,13 @@ import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 import java.util.List;
 
 @Autonomous
-public class GOLDorSILVER extends LinearOpMode {
+@Disabled
+public class GOLDorSILVER2 extends LinearOpMode{
     int gold = 0;
     int silver = 0;
-    float mineralposition = -1;
+    float goldpos = -1;
+    float silver1pos = -1;
+    float silver2pos = -1;
     //Create a object that will detect minerals
     private TFObjectDetector tfod;
     //Create Vuforia Object
@@ -67,33 +71,32 @@ public class GOLDorSILVER extends LinearOpMode {
         rightmotor.setPower(base);
         leftmotor2.setPower(base * -1);
         rightmotor2.setPower(base * -1);
-        sleep(800);
+        sleep(250);
         //Stop
         leftmotor.setPower(0);
         leftmotor2.setPower(0);
         rightmotor.setPower(0);
         rightmotor2.setPower(0);
-        //Move straight a bit
-        leftmotor.setPower(base);
-        leftmotor2.setPower(base);
-        rightmotor.setPower(base * -1);
-        rightmotor2.setPower(base * -1);
-        sleep(200);
         //Stop IT!
         leftmotor.setPower(0);
         leftmotor2.setPower(0);
         rightmotor.setPower(0);
         rightmotor2.setPower(0);
         //Check
-        sleep(750);
+        sleep(1000);
         check();
         telemetry.addData("Gold Minerals: ", gold);
         telemetry.addData("Silver Minerals: ", silver);
-        telemetry.addData("loc", mineralposition);
         telemetry.update();
         check();
         sleep(500);
-        if (gold == 1) {
+        if (goldpos != -1 && goldpos > silver1pos) {
+            //Sideways Right
+            leftmotor.setPower(base);
+            rightmotor.setPower(base);
+            leftmotor2.setPower(base * -1);
+            rightmotor2.setPower(base * -1);
+            sleep(400);
             //Go Forwards
             leftmotor.setPower(base);
             leftmotor2.setPower(base);
@@ -112,87 +115,8 @@ public class GOLDorSILVER extends LinearOpMode {
             //Reset the Arm
             arm.setPower(0);
         }
-        else {
-            //Turn Left
-            leftmotor.setPower(base);
-            leftmotor2.setPower(base);
-            rightmotor.setPower(base);
-            rightmotor2.setPower(base);
-            sleep(400);
-            //Stop
-            leftmotor.setPower(0);
-            leftmotor2.setPower(0);
-            rightmotor.setPower(0);
-            rightmotor2.setPower(0);
-            //Check
-            sleep(750);
-            gold = 0;
-            silver = 0;
-            check();
-            telemetry.addData("Gold Minerals2: ", gold);
-            telemetry.addData("Silver Minerals2: ", silver);
-            telemetry.addData("loc", mineralposition);
-            telemetry.update();
-            if (gold == 1) {
-                //Go Forwards
-                leftmotor.setPower(base);
-                leftmotor2.setPower(base);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
-                sleep(2250);
-                //Turn a little bit left
-                leftmotor.setPower(base * -1);
-                leftmotor2.setPower(base * -1);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
-                sleep(600);
-                //Stop
-                leftmotor.setPower(0);
-                leftmotor2.setPower(0);
-                rightmotor.setPower(0);
-                rightmotor2.setPower(0);
-                //Move arm down
-                DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
-                arm.setPower(0.4);
-                sleep(3000);
-                //Reset the Arm
-                arm.setPower(0);
-            }
-            else {
-                //Turn Right
-                leftmotor.setPower(base * -1);
-                leftmotor2.setPower(base * -1);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
-                sleep(850);
-                //Go Forwards
-                leftmotor.setPower(base);
-                leftmotor2.setPower(base);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
-                sleep(2250);
-                //Turn a little bit left
-                /*leftmotor.setPower(base * -1);
-                leftmotor2.setPower(base * -1);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
-                sleep(600);*/
-                //Stop
-                leftmotor.setPower(0);
-                leftmotor2.setPower(0);
-                rightmotor.setPower(0);
-                rightmotor2.setPower(0);
-                //Move arm down
-                DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
-                arm.setPower(0.4);
-                sleep(3000);
-                //Reset the Arm
-                arm.setPower(0);
-            }
-        }
-        sleep(10000);
     }
-    public void initVuforia () {
+    public void initVuforia () throws InterruptedException{
         //Create Vuforia Paramters Object
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
         //Initialize the Vuforia License Key
@@ -202,7 +126,7 @@ public class GOLDorSILVER extends LinearOpMode {
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
     }
-    public void initTFOD () {
+    public void initTFOD () throws InterruptedException{
         //Identify the TensorFlow "Sensor"
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -230,17 +154,23 @@ public class GOLDorSILVER extends LinearOpMode {
                 //If the object is gold then add one to gold variable
                 if (object.getLabel().equals("Gold Mineral")) {
                     gold = 1;
-                    mineralposition = object.getLeft();
+                    goldpos = object.getLeft();
                 }
                 //If the object is silver then add one to silver variable
                 if (object.getLabel().equals("Silver Mineral")) {
-                    silver = 1;
-                    mineralposition = object.getLeft();
+                    silver++;
+                    if (silver1pos == -1) {
+                        silver1pos = object.getLeft();
+                    }
+                    else {
+                        silver2pos = object.getLeft();
+                    }
                 }
             }
-            if (gold == 1 || silver == 1) {
+            if (gold + silver >= 2) {
                 break;
             }
+
         }
         return 0;
     }

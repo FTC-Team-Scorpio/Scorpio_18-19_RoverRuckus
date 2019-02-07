@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.Range;
 
 @Autonomous
+@Disabled
 public class TheAutonomous extends LinearOpMode{
     //Create Color Sensor Variable
     ColorSensor colorSensor;
@@ -14,7 +15,7 @@ public class TheAutonomous extends LinearOpMode{
         colorSensor = hardwareMap.get(ColorSensor.class, "color");
         //Wait until driver presses "Start"
         waitForStart();
-        //While OP Mofr is running
+        //While OP Mode is running
         while (opModeIsActive()) {
             //Initalize the motor
             DcMotor awesome = hardwareMap.get(DcMotor.class,"atach");
