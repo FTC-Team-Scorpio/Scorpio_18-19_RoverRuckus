@@ -94,14 +94,19 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         double base = Range.scale((gamepad1.right_stick_y*-1) + 1.3,0.3,1.3, 0,0.8);
         //If left joystick forward
         if (gamepad1.left_stick_y > 0) {
+            //Create rightspeed based on base and scale it appropriately
             double leftspeed =  Range.scale(base /*+ gamepad1.left_stick_x*/,-2.3,2.3,-1,1);
+            //Create rightspeed based on base and scale it appropriately
             double rightspeed = Range.scale(base * -1,-2.3,2.3,-1,1);
             if (gamepad1.left_stick_x > 0) {
+                //If gamepad is left make the right wheel move in the opposite direction, creating a spinning turn
                 rightspeed *= -1;
             }
             else if (gamepad1.left_stick_x < 0) {
+                //If gamepad is right make the left wheel move in the opposite direction, creating a spinning turn
                 leftspeed *= -1;
             }
+            //Apply rightspeed and leftspeed appropriately
             rightmotor.setPower(rightspeed * -1);
             rightmotor2.setPower(rightspeed * -1); //MECANUM
             leftmotor.setPower(leftspeed * -1);
@@ -110,41 +115,45 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         }
         //If left joystick back
         else if (gamepad1.left_stick_y < 0) {
-            //Set left motor to base speed plus the turn and multiply by -1 because moving backward
+            //Create rightspeed based on base and scale it appropriately
             double leftspeed = Range.scale((base /*+ gamepad1.left_stick_x*/) * -1,-2.3,2.3,-1,1);
+            //Create leftspeed based on base and scale it appropriately
             double rightspeed = Range.scale(base * -1 * -1, -2.3,2.3,-1,1);
             if (gamepad1.left_stick_x > 0) {
+                //If gamepad is left make the right wheel move in the opposite direction, creating a spinning turn
                 rightspeed *= -1;
             }
             else if (gamepad1.left_stick_x < 0) {
+                //If gamepad is right make the left wheel move in the opposite direction, creating a spinning turn
                 leftspeed *= -1;
             }
+            //Apply rightspeed and leftspeed approriately
             leftmotor.setPower(leftspeed * -1);
             leftmotor2.setPower(leftspeed * -1); //MECANUM
-            //Set right motor to base speed times -1 because backward (Extra -1 based on clockwise/counter-clockwise)
             rightmotor.setPower(rightspeed * -1);
             rightmotor2.setPower(rightspeed * -1); //MECANUM
         }
-        //If left joystick in center
-        else if (gamepad1.a){
+        //If "a" pressed
+        else if (gamepad1.a) {
+            //Move backward
             leftmotor.setPower(base * -1);
             rightmotor.setPower(base); //MECANUM
             leftmotor2.setPower(base * -1);
             rightmotor2.setPower(base); //MECANUM
         }
+        //If "y" pressed
         else if (gamepad1.y) {
-            //Set left motor to base speed (going straight)
+            //Move forwards
             leftmotor.setPower(base);
             leftmotor2.setPower(base); //MECANUM
-            //Set right motor to base speed (going straight) (Extra -1 based on clockwise/counter-clockwise)
             rightmotor.setPower(base * -1);
             rightmotor2.setPower(base * -1); //MECANUM
         }
+        //If nothing pressed
         else {
-            //Set left motor to base speed plus the turn
+            //Stop
             leftmotor.setPower(0);
             leftmotor2.setPower(0); //MECANUM
-            //Set right motor to base speed (Extra -1 based on clockwise/counter-clockwise)
             rightmotor.setPower(0);
             rightmotor2.setPower(0); //MECANUM
         }
@@ -157,45 +166,64 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         telemetry.addData("Right Motor Speed", rightmotor.getPower());
         telemetry.update();
     }
-    public void servoMotor () {
+    /*public void servoMotor () {
+        //
         Servo servo1 = hardwareMap.get(Servo.class, "servo1");
         servo1.setPosition(Range.scale(gamepad2.left_stick_x,-1,1,0,1));
         telemetry.addData("DA ONE (SERVO POS)", Range.scale(gamepad2.left_stick_x,-1,1,0.5,1));
         telemetry.update();
-    }
+    }*/
     public void landing () {
+        //If "a" (gamepad 2) pressed
         if (gamepad2.a) {
+            //move landing gear down
             motor3.setPower(-1);
-        }   
+        }
+        //If "y" (gamepad 2) pressed
         else if (gamepad2.y) {
+            //move landing gear up
             motor3.setPower(1);
         }
+        //If none pressed
         else {
+            //stop landing gear
             motor3.setPower(0);
         }
     }
     public void arm () {
+        //Create DcMotor arm
         DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
+        //If "x" (gamepad 2) pressed
         if (gamepad2.x) {
+            //Move arm forwards
             arm.setPower(-0.6);
         }
+        //If "b" (gamepad 2) pressed
         else if (gamepad2.b) {
+            //Move arm forwards
             arm.setPower(0.6);
         }
+        //If none of the above pressed
         else {
+            //Stop the arm
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             arm.setPower(0);
         }
     }
     public void mecanum () {
+        //Create base based on the speed joystick
         double base = Range.scale((gamepad1.right_stick_y*-1) + 1.3,0.3,1.3, 0,0.4);
+        //If left trigger pressed
         if (gamepad1.left_trigger != 0) {
+            //Move sideways left
             leftmotor.setPower(base * -1);
             rightmotor.setPower(base * -1);
             leftmotor2.setPower(base);
             rightmotor2.setPower(base);
         }
+        //If right trigger pressed
         else if (gamepad1.right_trigger != 0) {
+            //Move sideways right
             leftmotor.setPower(base);
             rightmotor.setPower(base);
             leftmotor2.setPower(base * -1);
