@@ -42,7 +42,7 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
             newmotor(); //Control the basic drivetrain using the controller (Refer to newmotor function)/good
             //servoMotor(); //Do the servos
             landing(); //good
-            arm();
+            arm(); //for testing
             mecanum(); //good
             spinner();
             armmove();
@@ -50,11 +50,11 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
     }
     public void armmove () {
         DcMotor atach2 = hardwareMap.get(DcMotor.class, "atach2");
-        if (gamepad2.dpad_left) {
-            atach2.setPower(0.4);
+        if (gamepad2.right_stick_y > 0) {
+            atach2.setPower(-0.35);
         }
-        else if (gamepad2.dpad_right) {
-            atach2.setPower(-0.4);
+        else if (gamepad2.right_stick_y < 0) {
+            atach2.setPower(0.35);
         }
         else {
             atach2.setPower(0);
@@ -115,7 +115,7 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         }
         //If left joystick back
         else if (gamepad1.left_stick_y < 0) {
-            //Create rightspeed based on base and scale it appropriately
+            //Create rightspeed based on base and sacale it appropriately
             double leftspeed = Range.scale((base /*+ gamepad1.left_stick_x*/) * -1,-2.3,2.3,-1,1);
             //Create leftspeed based on base and scale it appropriately
             double rightspeed = Range.scale(base * -1 * -1, -2.3,2.3,-1,1);
@@ -191,23 +191,27 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         }
     }
     public void arm () {
-        //Create DcMotor arm
+        //Create DcMotor arm and arm2
         DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
-        //If "x" (gamepad 2) pressed
-        if (gamepad2.x) {
+        DcMotor arm2 = hardwareMap.get(DcMotor.class, "arm2");
+        //If left joystick down
+        if (gamepad2.left_stick_y > 0) {
             //Move arm forwards
-            arm.setPower(-0.7);
+            arm.setPower(0.25);
+            arm2.setPower(-0.25);
         }
-        //If "b" (gamepad 2) pressed
-        else if (gamepad2.b) {
+        //If left joystick up
+        else if (gamepad2.left_stick_y < 0) {
             //Move arm forwards
-            arm.setPower(0.7);
+            arm.setPower(-0.25);
+            arm2.setPower(0.25);
         }
         //If none of the above pressed
         else {
             //Stop the arm
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             arm.setPower(0);
+            arm2.setPower(0);
         }
     }
     public void mecanum () {
