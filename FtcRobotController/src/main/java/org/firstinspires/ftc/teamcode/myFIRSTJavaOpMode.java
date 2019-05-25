@@ -39,11 +39,11 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         //Wait for Start
         waitForStart();
         while (opModeIsActive()) {
-            newmotor(); //Control the basic drivetrain using the controller (Refer to newmotor function)
+            newmotor(); //Control the basic drivetrain using the controller (Refer to newmotor function)/good
             //servoMotor(); //Do the servos
-            landing();
+            landing(); //good
             arm();
-            mecanum();
+            mecanum(); //good
             spinner();
             armmove();
         }
@@ -136,18 +136,18 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         //If "a" pressed
         else if (gamepad1.a) {
             //Move backward
-            leftmotor.setPower(base * -1);
-            rightmotor.setPower(base); //MECANUM
-            leftmotor2.setPower(base * -1);
-            rightmotor2.setPower(base); //MECANUM
+            leftmotor.setPower(-1);
+            rightmotor.setPower(1); //MECANUM
+            leftmotor2.setPower(-1);
+            rightmotor2.setPower(1); //MECANUM
         }
         //If "y" pressed
         else if (gamepad1.y) {
             //Move forwards
-            leftmotor.setPower(base);
-            leftmotor2.setPower(base); //MECANUM
-            rightmotor.setPower(base * -1);
-            rightmotor2.setPower(base * -1); //MECANUM
+            leftmotor.setPower(1);
+            leftmotor2.setPower(1); //MECANUM
+            rightmotor.setPower(-1);
+            rightmotor2.setPower(-1); //MECANUM
         }
         //If nothing pressed
         else {
@@ -196,12 +196,12 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         //If "x" (gamepad 2) pressed
         if (gamepad2.x) {
             //Move arm forwards
-            arm.setPower(-0.6);
+            arm.setPower(-0.7);
         }
         //If "b" (gamepad 2) pressed
         else if (gamepad2.b) {
             //Move arm forwards
-            arm.setPower(0.6);
+            arm.setPower(0.7);
         }
         //If none of the above pressed
         else {

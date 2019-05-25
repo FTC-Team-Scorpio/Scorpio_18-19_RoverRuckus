@@ -1,30 +1,22 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.content.Context;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.function.Consumer;
-import org.firstinspires.ftc.robotcore.external.function.Continuation;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.Camera;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.CameraCharacteristics;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.CameraName;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 
 import java.util.List;
 
 @Autonomous
-public class GOLDorSILVER extends LinearOpMode {
+public class landscapeGOLDorSILVER extends LinearOpMode {
     int gold = 0;
     int silver = 0;
     float mineralposition = -1;
+    DcMotor arm;
     //Create a object that will detect minerals
     private TFObjectDetector tfod;
     //Create Vuforia Object
@@ -86,14 +78,16 @@ public class GOLDorSILVER extends LinearOpMode {
         rightmotor2.setPower(0);
         //Check
         sleep(750);
-        check();
+        int kul = check();
+        while (kul == -1) {
+            kul = check();
+        }
         telemetry.addData("Gold Minerals: ", gold);
         telemetry.addData("Silver Minerals: ", silver);
         telemetry.addData("loc", mineralposition);
         telemetry.update();
-        check();
         sleep(500);
-        if (gold == 1) {
+        if (kul == 0) {
             //Go Forwards
             leftmotor.setPower(base);
             leftmotor2.setPower(base);
@@ -106,92 +100,75 @@ public class GOLDorSILVER extends LinearOpMode {
             rightmotor.setPower(0);
             rightmotor2.setPower(0);
             //Move arm down
-            DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
+            arm = hardwareMap.get(DcMotor.class, "arm");
             arm.setPower(0.4);
             sleep(3000);
             //Reset the Arm
             arm.setPower(0);
         }
-        else {
+        if (kul == 1) {
             //Turn Left
             leftmotor.setPower(base);
             leftmotor2.setPower(base);
             rightmotor.setPower(base);
             rightmotor2.setPower(base);
             sleep(400);
+            //Go Forwards
+            leftmotor.setPower(base);
+            leftmotor2.setPower(base);
+            rightmotor.setPower(base * -1);
+            rightmotor2.setPower(base * -1);
+            sleep(2250);
+            //Turn a little bit left
+            leftmotor.setPower(base * -1);
+            leftmotor2.setPower(base * -1);
+            rightmotor.setPower(base * -1);
+            rightmotor2.setPower(base * -1);
+            sleep(600);
             //Stop
             leftmotor.setPower(0);
             leftmotor2.setPower(0);
             rightmotor.setPower(0);
             rightmotor2.setPower(0);
-            //Check
-            sleep(750);
-            gold = 0;
-            silver = 0;
-            check();
-            telemetry.addData("Gold Minerals2: ", gold);
-            telemetry.addData("Silver Minerals2: ", silver);
-            telemetry.addData("loc", mineralposition);
-            telemetry.update();
-            if (gold == 1) {
-                //Go Forwards
-                leftmotor.setPower(base);
-                leftmotor2.setPower(base);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
-                sleep(2250);
-                //Turn a little bit left
-                leftmotor.setPower(base * -1);
-                leftmotor2.setPower(base * -1);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
-                sleep(600);
-                //Stop
-                leftmotor.setPower(0);
-                leftmotor2.setPower(0);
-                rightmotor.setPower(0);
-                rightmotor2.setPower(0);
-                //Move arm down
-                DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
-                arm.setPower(0.4);
-                sleep(3000);
-                //Reset the Arm
-                arm.setPower(0);
-            }
-            else {
-                //Turn Right
-                leftmotor.setPower(base * -1);
-                leftmotor2.setPower(base * -1);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
-                sleep(960);
-                //Go Forwards
-                leftmotor.setPower(base);
-                leftmotor2.setPower(base);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
-                sleep(2250);
-                //Turn a little bit left
-                /*leftmotor.setPower(base * -1);
-                leftmotor2.setPower(base * -1);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
-                sleep(600);*/
-                //Stop
-                leftmotor.setPower(0);
-                leftmotor2.setPower(0);
-                rightmotor.setPower(0);
-                rightmotor2.setPower(0);
-                //Move arm down
-                DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
-                arm.setPower(0.4);
-                sleep(3000);
-                //Reset the Arm
-                arm.setPower(0);
+            //Move arm down
+            DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
+            arm.setPower(0.4);
+            sleep(3000);
+            //Reset the Arm
+            arm.setPower(0);
+        }
+        if (kul == 2) {
+            //Turn Right
+            leftmotor.setPower(base * -1);
+            leftmotor2.setPower(base * -1);
+            rightmotor.setPower(base * -1);
+            rightmotor2.setPower(base * -1);
+            sleep(400);
+            //Go Forwards
+            leftmotor.setPower(base);
+            leftmotor2.setPower(base);
+            rightmotor.setPower(base * -1);
+            rightmotor2.setPower(base * -1);
+            sleep(2250);
+            //Turn a little bit left
+            /*leftmotor.setPower(base * -1);
+            leftmotor2.setPower(base * -1);
+            rightmotor.setPower(base * -1);
+            rightmotor2.setPower(base * -1);
+            sleep(600);*/
+            //Stop
+            leftmotor.setPower(0);
+            leftmotor2.setPower(0);
+            rightmotor.setPower(0);
+            rightmotor2.setPower(0);
+            //Move arm down
+            arm = hardwareMap.get(DcMotor.class, "arm");
+            arm.setPower(0.4);
+            sleep(3000);
+            //Reset the Arm
+            arm.setPower(0);
             }
         }
-        sleep(10000);
-    }
     public void initVuforia () {
         //Create Vuforia Paramters Object
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
@@ -214,34 +191,47 @@ public class GOLDorSILVER extends LinearOpMode {
         tfod.loadModelFromAsset("RoverRuckus.tflite", "Gold Mineral", "Silver Mineral");
     }
     public int check () {
-        gold = 0;
-        silver = 0;
         while (opModeIsActive()) {
-            tfod.activate();
-            //Create a list of all new recognized objects
-            List<Recognition> objects = tfod.getUpdatedRecognitions();
-            //If there is no new recognized objects
-            if (objects == null) {
-                //Restart loop
-                continue;
-            }
-            //For every new identified object
-            for (Recognition object : objects) {
-                //If the object is gold then add one to gold variable
-                if (object.getLabel().equals("Gold Mineral")) {
-                    gold = 1;
-                    mineralposition = object.getLeft();
+            if (tfod != null) {
+                // getUpdatedRecognitions() will return null if no new information is available since
+                // the last time that call was made.
+                List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+                if (updatedRecognitions != null) {
+                    telemetry.addData("# Object Detected", updatedRecognitions.size());
+                    if (updatedRecognitions.size() == 3) {
+                        int goldMineralX = -1;
+                        int silverMineral1X = -1;
+                        int silverMineral2X = -1;
+                        for (Recognition recognition : updatedRecognitions) {
+                            if (recognition.getLabel().equals("Gold Mineral")) {
+                                goldMineralX = (int) recognition.getLeft();
+                            } else if (silverMineral1X == -1) {
+                                silverMineral1X = (int) recognition.getLeft();
+                            } else {
+                                silverMineral2X = (int) recognition.getLeft();
+                            }
+                        }
+                        if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
+                            if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
+                                telemetry.addData("Pos","Right");
+                                return 2;
+                            } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
+                                telemetry.addData("Pos","Left");
+                                return 1;
+                            } else {
+                                telemetry.addData("Pos","Center");
+                                return 0;
+                            }
+                        }
+                        else {
+                            telemetry.addData("Pos","Not Detected");
+                        }
+                        telemetry.update();
+                        return -1;
+                    }
                 }
-                //If the object is silver then add one to silver variable
-                if (object.getLabel().equals("Silver Mineral")) {
-                    silver = 1;
-                    mineralposition = object.getLeft();
-                }
-            }
-            if (gold == 1 || silver == 1) {
-                break;
             }
         }
-        return 0;
+        return -1;
     }
 }

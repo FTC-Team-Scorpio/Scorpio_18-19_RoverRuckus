@@ -5,6 +5,7 @@ import android.content.Context;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.function.Consumer;
@@ -21,10 +22,15 @@ import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 import java.util.List;
 
 @Autonomous
-public class GOLDorSILVER extends LinearOpMode {
+public class depot222GOLDorSILVER extends LinearOpMode {
+    //Init variables
     int gold = 0;
     int silver = 0;
     float mineralposition = -1;
+    DcMotor leftmotor;
+    DcMotor rightmotor;
+    DcMotor leftmotor2;
+    DcMotor rightmotor2;
     //Create a object that will detect minerals
     private TFObjectDetector tfod;
     //Create Vuforia Object
@@ -32,7 +38,7 @@ public class GOLDorSILVER extends LinearOpMode {
     //Create variable that stores the Vuforia License Key
     private static final String VUFORIA_KEY = "AWcVaaD/////AAABmZwP74eVtklZnIyqakTO2OgZwlPh8T1HsrgYVIEDnOoyHLj2L/rcsf4swWk/DCfwjbmE1BW6y7PmkyMW4qU52qB6ne+cY0gWZ2N7K1xYZpG78NA3EWxYq8B+j81wdDD7viNoWx62SX04i5BDxzZIHpSNFfMUIBmQfEMnczuHyPOLNCN4akso3GDtigRTi+KedV0B3w7+J3yMkpWcgmMhZOMT32WAlASPl8sP2OfinvRZkX+dk0AzuMLrUyD85dbnOBrmHKllIaYp9Vky1xYvKJ96EsNGAnCGFd8KBNNLAZhwkWrBGtzRYuy1R0zLVWDYIkt85yMLBnyuC+TOd+bn+SCsWgib1mVckAhg0D8XGPkq";
     //Function to Run Op Mode
-    public void runOpMode () throws InterruptedException{
+    public void runOpMode () throws InterruptedException {
         //Initialize Vuforia (Refer to "initVuforia" function)
         initVuforia();
         //Initalize TensorFlow (Refer to "initTFOD" function)
@@ -40,11 +46,12 @@ public class GOLDorSILVER extends LinearOpMode {
         //Wait until driver presses "Start"
         waitForStart();
         //Init
-        DcMotor leftmotor = hardwareMap.get(DcMotor.class, "leftmotor");
-        DcMotor rightmotor = hardwareMap.get(DcMotor.class, "rightmotor");
-        DcMotor leftmotor2 = hardwareMap.get(DcMotor.class, "leftmotor2");
-        DcMotor rightmotor2 = hardwareMap.get(DcMotor.class, "rightmotor2");
+        leftmotor = hardwareMap.get(DcMotor.class, "leftmotor");
+        rightmotor = hardwareMap.get(DcMotor.class, "rightmotor");
+        leftmotor2 = hardwareMap.get(DcMotor.class, "leftmotor2");
+        rightmotor2 = hardwareMap.get(DcMotor.class, "rightmotor2");
         DcMotor motor3 = hardwareMap.get(DcMotor.class, "atach");
+        Servo claim = hardwareMap.get(Servo.class, "servo0");
         double base = 0.6;
         //Go Down
         motor3.setPower(1);
@@ -56,7 +63,7 @@ public class GOLDorSILVER extends LinearOpMode {
         rightmotor.setPower(base * -1);
         rightmotor2.setPower(base * -1);
         sleep(750);
-        //Turn Left
+        //Turn Right
         leftmotor.setPower(base);
         leftmotor2.setPower(base);
         rightmotor.setPower(base);
@@ -99,18 +106,29 @@ public class GOLDorSILVER extends LinearOpMode {
             leftmotor2.setPower(base);
             rightmotor.setPower(base * -1);
             rightmotor2.setPower(base * -1);
-            sleep(2250);
+            sleep(3500);
+            //Turn left
+            leftmotor.setPower(base);
+            leftmotor2.setPower(base);
+            rightmotor.setPower(base);
+            rightmotor2.setPower(base);
+            sleep(500);
+            //Straight
+            leftmotor.setPower(base);
+            leftmotor2.setPower(base);
+            rightmotor.setPower(base * -1);
+            rightmotor2.setPower(base * -1);
+            sleep(750);
             //Stop
             leftmotor.setPower(0);
             leftmotor2.setPower(0);
             rightmotor.setPower(0);
             rightmotor2.setPower(0);
-            //Move arm down
-            DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
-            arm.setPower(0.4);
-            sleep(3000);
-            //Reset the Arm
-            arm.setPower(0);
+            //Claim
+            claim.setPosition(0.3);
+            sleep(500);
+            claim.setPosition(1);
+            middlegoldpark();
         }
         else {
             //Turn Left
@@ -118,7 +136,7 @@ public class GOLDorSILVER extends LinearOpMode {
             leftmotor2.setPower(base);
             rightmotor.setPower(base);
             rightmotor2.setPower(base);
-            sleep(400);
+            sleep(550);
             //Stop
             leftmotor.setPower(0);
             leftmotor2.setPower(0);
@@ -139,24 +157,40 @@ public class GOLDorSILVER extends LinearOpMode {
                 leftmotor2.setPower(base);
                 rightmotor.setPower(base * -1);
                 rightmotor2.setPower(base * -1);
-                sleep(2250);
+                sleep(2500);
                 //Turn a little bit left
-                leftmotor.setPower(base * -1);
+                /*leftmotor.setPower(base * -1);
                 leftmotor2.setPower(base * -1);
                 rightmotor.setPower(base * -1);
                 rightmotor2.setPower(base * -1);
-                sleep(600);
+                sleep(600);*/
+                //Turn Right
+                leftmotor.setPower(-0.4);
+                leftmotor2.setPower(-0.4);
+                rightmotor.setPower(-0.4);
+                rightmotor2.setPower(-0.4);
+                sleep(1500);
+                //Straight
+                leftmotor.setPower(base);
+                leftmotor2.setPower(base);
+                rightmotor.setPower(base * -1);
+                rightmotor2.setPower(base * -1);
+                sleep(2500);
+                //Turn Right
+                leftmotor.setPower(base);
+                leftmotor2.setPower(base);
+                rightmotor.setPower(base );
+                rightmotor2.setPower(base);
+                sleep(750);
                 //Stop
                 leftmotor.setPower(0);
                 leftmotor2.setPower(0);
                 rightmotor.setPower(0);
                 rightmotor2.setPower(0);
-                //Move arm down
-                DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
-                arm.setPower(0.4);
-                sleep(3000);
-                //Reset the Arm
-                arm.setPower(0);
+                //Claim
+                claim.setPosition(0.3);
+                sleep(500);
+                claim.setPosition(1);
             }
             else {
                 //Turn Right
@@ -164,30 +198,40 @@ public class GOLDorSILVER extends LinearOpMode {
                 leftmotor2.setPower(base * -1);
                 rightmotor.setPower(base * -1);
                 rightmotor2.setPower(base * -1);
-                sleep(960);
+                sleep(1100);
                 //Go Forwards
                 leftmotor.setPower(base);
                 leftmotor2.setPower(base);
                 rightmotor.setPower(base * -1);
                 rightmotor2.setPower(base * -1);
-                sleep(2250);
+                sleep(2500);
                 //Turn a little bit left
                 /*leftmotor.setPower(base * -1);
                 leftmotor2.setPower(base * -1);
                 rightmotor.setPower(base * -1);
                 rightmotor2.setPower(base * -1);
                 sleep(600);*/
+                //Turn left
+                leftmotor.setPower(0.4);
+                leftmotor2.setPower(0.4);
+                rightmotor.setPower(0.4);
+                rightmotor2.setPower(0.4);
+                sleep(1500);
+                //Straight
+                leftmotor.setPower(base);
+                leftmotor2.setPower(base);
+                rightmotor.setPower(base * -1);
+                rightmotor2.setPower(base * -1);
+                sleep(2500);
                 //Stop
                 leftmotor.setPower(0);
                 leftmotor2.setPower(0);
                 rightmotor.setPower(0);
                 rightmotor2.setPower(0);
-                //Move arm down
-                DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
-                arm.setPower(0.4);
-                sleep(3000);
-                //Reset the Arm
-                arm.setPower(0);
+                //Claim
+                claim.setPosition(0.3);
+                sleep(500);
+                claim.setPosition(1);
             }
         }
         sleep(10000);
@@ -243,5 +287,48 @@ public class GOLDorSILVER extends LinearOpMode {
             }
         }
         return 0;
+    }
+    public void middlegoldpark () {
+        double base = 1;
+        //Turn left a little bit
+        leftmotor.setPower(base);
+        leftmotor2.setPower(base);
+        rightmotor.setPower(base);
+        rightmotor2.setPower(base);
+        sleep(100);
+        //Move sideways left
+        leftmotor.setPower(base * -1);
+        rightmotor.setPower(base * -1);
+        leftmotor2.setPower(base);
+        rightmotor2.setPower(base);
+        sleep(500);
+        //GO BACKWARDS
+        leftmotor.setPower(base * -1);
+        leftmotor2.setPower(base * -1);
+        rightmotor.setPower(base);
+        rightmotor2.setPower(base);
+        sleep(3000);
+        //Go sideways left
+        leftmotor.setPower(base * -1);
+        rightmotor.setPower(base * -1);
+        leftmotor2.setPower(base);
+        rightmotor2.setPower(base);
+        sleep(500);
+        //GO BACKWARDS
+        leftmotor.setPower(base * -1);
+        leftmotor2.setPower(base * -1);
+        rightmotor.setPower(base);
+        rightmotor2.setPower(base);
+        sleep(1000);
+        //Stop
+        leftmotor.setPower(0);
+        leftmotor2.setPower(0);
+        rightmotor.setPower(0);
+        rightmotor2.setPower(0);
+        //Move thing down
+        DcMotor atach2 = hardwareMap.get(DcMotor.class, "atach2");
+        atach2.setPower(0.4);
+        sleep(1000);
+        atach2.setPower(0);
     }
 }
