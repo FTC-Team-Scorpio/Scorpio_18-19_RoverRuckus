@@ -27,8 +27,8 @@ public class AutonomousLanding1OFFICIAL extends LinearOpMode {
         //Go Forwards
         leftmotor.setPower(base);
         leftmotor2.setPower(base);
-        rightmotor.setPower(base * -1);
-        rightmotor2.setPower(base * -1);
+        rightmotor.setPower(base);
+        rightmotor2.setPower(base);
         sleep(500);
         //Turn Left
         leftmotor.setPower(base);
@@ -39,8 +39,8 @@ public class AutonomousLanding1OFFICIAL extends LinearOpMode {
         //Go Forwards
         leftmotor.setPower(base);
         leftmotor2.setPower(base);
-        rightmotor.setPower(base * -1);
-        rightmotor2.setPower(base * -1);
+        rightmotor.setPower(base);
+        rightmotor2.setPower(base);
         sleep(4000);
         //Stop
         leftmotor.setPower(0);

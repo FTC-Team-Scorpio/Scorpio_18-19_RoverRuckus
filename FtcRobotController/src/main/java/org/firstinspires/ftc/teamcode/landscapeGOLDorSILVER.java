@@ -45,8 +45,8 @@ public class landscapeGOLDorSILVER extends LinearOpMode {
         //Go Forwards
         leftmotor.setPower(base);
         leftmotor2.setPower(base);
-        rightmotor.setPower(base * -1);
-        rightmotor2.setPower(base * -1);
+        rightmotor.setPower(base);
+        rightmotor2.setPower(base);
         sleep(750);
         //Turn Left
         leftmotor.setPower(base);
@@ -57,8 +57,8 @@ public class landscapeGOLDorSILVER extends LinearOpMode {
         //Sideways Right
         leftmotor.setPower(base);
         rightmotor.setPower(base);
-        leftmotor2.setPower(base * -1);
-        rightmotor2.setPower(base * -1);
+        leftmotor2.setPower(base);
+        rightmotor2.setPower(base);
         sleep(800);
         //Stop
         leftmotor.setPower(0);
@@ -68,8 +68,8 @@ public class landscapeGOLDorSILVER extends LinearOpMode {
         //Move straight a bit
         leftmotor.setPower(base);
         leftmotor2.setPower(base);
-        rightmotor.setPower(base * -1);
-        rightmotor2.setPower(base * -1);
+        rightmotor.setPower(base);
+        rightmotor2.setPower(base);
         sleep(200);
         //Stop IT!
         leftmotor.setPower(0);
@@ -91,8 +91,8 @@ public class landscapeGOLDorSILVER extends LinearOpMode {
             //Go Forwards
             leftmotor.setPower(base);
             leftmotor2.setPower(base);
-            rightmotor.setPower(base * -1);
-            rightmotor2.setPower(base * -1);
+            rightmotor.setPower(base);
+            rightmotor2.setPower(base);
             sleep(2250);
             //Stop
             leftmotor.setPower(0);
@@ -116,14 +116,14 @@ public class landscapeGOLDorSILVER extends LinearOpMode {
             //Go Forwards
             leftmotor.setPower(base);
             leftmotor2.setPower(base);
-            rightmotor.setPower(base * -1);
-            rightmotor2.setPower(base * -1);
+            rightmotor.setPower(base);
+            rightmotor2.setPower(base);
             sleep(2250);
             //Turn a little bit left
-            leftmotor.setPower(base * -1);
-            leftmotor2.setPower(base * -1);
-            rightmotor.setPower(base * -1);
-            rightmotor2.setPower(base * -1);
+            leftmotor.setPower(base);
+            leftmotor2.setPower(base);
+            rightmotor.setPower(base);
+            rightmotor2.setPower(base);
             sleep(600);
             //Stop
             leftmotor.setPower(0);
@@ -139,22 +139,22 @@ public class landscapeGOLDorSILVER extends LinearOpMode {
         }
         if (kul == 2) {
             //Turn Right
-            leftmotor.setPower(base * -1);
-            leftmotor2.setPower(base * -1);
-            rightmotor.setPower(base * -1);
-            rightmotor2.setPower(base * -1);
+            leftmotor.setPower(base);
+            leftmotor2.setPower(base);
+            rightmotor.setPower(base);
+            rightmotor2.setPower(base);
             sleep(400);
             //Go Forwards
             leftmotor.setPower(base);
             leftmotor2.setPower(base);
-            rightmotor.setPower(base * -1);
-            rightmotor2.setPower(base * -1);
+            rightmotor.setPower(base);
+            rightmotor2.setPower(base);
             sleep(2250);
             //Turn a little bit left
-            /*leftmotor.setPower(base * -1);
-            leftmotor2.setPower(base * -1);
-            rightmotor.setPower(base * -1);
-            rightmotor2.setPower(base * -1);
+            /*leftmotor.setPower(base);
+            leftmotor2.setPower(base);
+            rightmotor.setPower(base);
+            rightmotor2.setPower(base);
             sleep(600);*/
             //Stop
             leftmotor.setPower(0);

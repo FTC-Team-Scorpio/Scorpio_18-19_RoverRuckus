@@ -60,8 +60,8 @@ public class depot333GOLDorSILVER extends LinearOpMode {
         //Go Forwards
         leftmotor.setPower(base);
         leftmotor2.setPower(base);
-        rightmotor.setPower(base * -1);
-        rightmotor2.setPower(base * -1);
+        rightmotor.setPower(base);
+        rightmotor2.setPower(base);
         sleep(450);
         //Turn Right
         leftmotor.setPower(base);
@@ -72,8 +72,8 @@ public class depot333GOLDorSILVER extends LinearOpMode {
         //Sideways Right
         leftmotor.setPower(base);
         rightmotor.setPower(base);
-        leftmotor2.setPower(base * -1);
-        rightmotor2.setPower(base * -1);
+        leftmotor2.setPower(base);
+        rightmotor2.setPower(base);
         sleep(600);
         //Stop
         leftmotor.setPower(0);
@@ -83,8 +83,8 @@ public class depot333GOLDorSILVER extends LinearOpMode {
         //Move straight a bit
         leftmotor.setPower(base);
         leftmotor2.setPower(base);
-        rightmotor.setPower(base * -1);
-        rightmotor2.setPower(base * -1);
+        rightmotor.setPower(base);
+        rightmotor2.setPower(base);
         sleep(120);
         //Stop IT!
         leftmotor.setPower(0);
@@ -104,8 +104,8 @@ public class depot333GOLDorSILVER extends LinearOpMode {
             //Go Forwards
             leftmotor.setPower(base);
             leftmotor2.setPower(base);
-            rightmotor.setPower(base * -1);
-            rightmotor2.setPower(base * -1);
+            rightmotor.setPower(base);
+            rightmotor2.setPower(base);
             sleep(2800);
             //Turn left
             leftmotor.setPower(base);
@@ -116,8 +116,8 @@ public class depot333GOLDorSILVER extends LinearOpMode {
             //Straight
             leftmotor.setPower(base);
             leftmotor2.setPower(base);
-            rightmotor.setPower(base * -1);
-            rightmotor2.setPower(base * -1);
+            rightmotor.setPower(base);
+            rightmotor2.setPower(base);
             sleep(600);
             //Stop
             leftmotor.setPower(0);
@@ -155,14 +155,14 @@ public class depot333GOLDorSILVER extends LinearOpMode {
                 //Go Forwards
                 leftmotor.setPower(base);
                 leftmotor2.setPower(base);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
+                rightmotor.setPower(base);
+                rightmotor2.setPower(base);
                 sleep(1500);
                 //Turn a little bit left
-                /*leftmotor.setPower(base * -1);
-                leftmotor2.setPower(base * -1);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
+                /*leftmotor.setPower(base);
+                leftmotor2.setPower(base);
+                rightmotor.setPower(base);
+                rightmotor2.setPower(base);
                 sleep(600);*/
                 //Turn Right
                 leftmotor.setPower(-0.4);
@@ -173,8 +173,8 @@ public class depot333GOLDorSILVER extends LinearOpMode {
                 //Straight
                 leftmotor.setPower(base);
                 leftmotor2.setPower(base);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
+                rightmotor.setPower(base);
+                rightmotor2.setPower(base);
                 sleep(1500);
                 //Turn Right
                 leftmotor.setPower(base);
@@ -183,8 +183,8 @@ public class depot333GOLDorSILVER extends LinearOpMode {
                 rightmotor2.setPower(base);
                 sleep(450);
                 //Move sideways left
-                leftmotor.setPower(base * -1);
-                rightmotor.setPower(base * -1);
+                leftmotor.setPower(base);
+                rightmotor.setPower(base);
                 leftmotor2.setPower(base);
                 rightmotor2.setPower(base);
                 sleep(1000);
@@ -200,30 +200,30 @@ public class depot333GOLDorSILVER extends LinearOpMode {
                 //Move sideways right
                 leftmotor.setPower(base);
                 rightmotor.setPower(base);
-                leftmotor2.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
+                leftmotor2.setPower(base);
+                rightmotor2.setPower(base);
                 sleep(200);
                 //Park
                 leftgoldpark();
             }
             else {
                 //Turn Right
-                leftmotor.setPower(base * -1);
-                leftmotor2.setPower(base * -1);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
+                leftmotor.setPower(base);
+                leftmotor2.setPower(base);
+                rightmotor.setPower(base);
+                rightmotor2.setPower(base);
                 sleep(950);
                 //Go Forwards
                 leftmotor.setPower(base);
                 leftmotor2.setPower(base);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
+                rightmotor.setPower(base);
+                rightmotor2.setPower(base);
                 sleep(1300);
                 //Turn a little bit left
-                /*leftmotor.setPower(base * -1);
-                leftmotor2.setPower(base * -1);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
+                /*leftmotor.setPower(base);
+                leftmotor2.setPower(base);
+                rightmotor.setPower(base);
+                rightmotor2.setPower(base);
                 sleep(600);*/
                 //Turn left
                 leftmotor.setPower(0.4);
@@ -234,8 +234,8 @@ public class depot333GOLDorSILVER extends LinearOpMode {
                 //Straight
                 leftmotor.setPower(base);
                 leftmotor2.setPower(base);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
+                rightmotor.setPower(base);
+                rightmotor2.setPower(base);
                 sleep(1800);
                 //Turn left
                 leftmotor.setPower(0.4);
@@ -246,8 +246,8 @@ public class depot333GOLDorSILVER extends LinearOpMode {
                 //Straight
                 leftmotor.setPower(base);
                 leftmotor2.setPower(base);
-                rightmotor.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
+                rightmotor.setPower(base);
+                rightmotor2.setPower(base);
                 sleep(500);
                 //Stop
                 leftmotor.setPower(0);
@@ -261,8 +261,8 @@ public class depot333GOLDorSILVER extends LinearOpMode {
                 //Sideways
                 leftmotor.setPower(base);
                 rightmotor.setPower(base);
-                leftmotor2.setPower(base * -1);
-                rightmotor2.setPower(base * -1);
+                leftmotor2.setPower(base);
+                rightmotor2.setPower(base);
                 sleep(200);
                 //Park
                 rightgoldpark();
@@ -331,20 +331,20 @@ public class depot333GOLDorSILVER extends LinearOpMode {
         rightmotor2.setPower(base);
         sleep(100);
         //GO BACKWARDS
-        leftmotor.setPower(base * -1);
-        leftmotor2.setPower(base * -1);
+        leftmotor.setPower(base);
+        leftmotor2.setPower(base);
         rightmotor.setPower(base);
         rightmotor2.setPower(base);
         sleep(1000);
         //Go sideways left
-        leftmotor.setPower(base * -1);
-        rightmotor.setPower(base * -1);
+        leftmotor.setPower(base);
+        rightmotor.setPower(base);
         leftmotor2.setPower(base);
         rightmotor2.setPower(base);
         sleep(1200);
         //GO BACKWARDS
-        leftmotor.setPower(base * -1);
-        leftmotor2.setPower(base * -1);
+        leftmotor.setPower(base);
+        leftmotor2.setPower(base);
         rightmotor.setPower(base);
         rightmotor2.setPower(base);
         sleep(4200);
@@ -368,26 +368,26 @@ public class depot333GOLDorSILVER extends LinearOpMode {
         rightmotor2.setPower(base);
         sleep(100);
         //GO BACKWARDS
-        leftmotor.setPower(base * -1);
-        leftmotor2.setPower(base * -1);
+        leftmotor.setPower(base);
+        leftmotor2.setPower(base);
         rightmotor.setPower(base);
         rightmotor2.setPower(base);
         sleep(700);
         //Move sideways left
-        leftmotor.setPower(base * -1);
-        rightmotor.setPower(base * -1);
+        leftmotor.setPower(base);
+        rightmotor.setPower(base);
         leftmotor2.setPower(base);
         rightmotor2.setPower(base);
         sleep(1200);
         //GO BACKWARDS
-        leftmotor.setPower(base * -1);
-        leftmotor2.setPower(base * -1);
+        leftmotor.setPower(base);
+        leftmotor2.setPower(base);
         rightmotor.setPower(base);
         rightmotor2.setPower(base);
         sleep(2300);
         //GO BACKWARDS
-        leftmotor.setPower(base * -1);
-        leftmotor2.setPower(base * -1);
+        leftmotor.setPower(base);
+        leftmotor2.setPower(base);
         rightmotor.setPower(base);
         rightmotor2.setPower(base);
         sleep(1200);
@@ -405,20 +405,20 @@ public class depot333GOLDorSILVER extends LinearOpMode {
     public void rightgoldpark () {
         double base = 1;
         //GO BACKWARDS
-        leftmotor.setPower(base * -1);
-        leftmotor2.setPower(base * -1);
+        leftmotor.setPower(base);
+        leftmotor2.setPower(base);
         rightmotor.setPower(base);
         rightmotor2.setPower(base);
         sleep(1000);
         //Move sideways left
-        leftmotor.setPower(base * -1);
-        rightmotor.setPower(base * -1);
+        leftmotor.setPower(base);
+        rightmotor.setPower(base);
         leftmotor2.setPower(base);
         rightmotor2.setPower(base);
         sleep(500);
         //GO BACKWARDS
-        leftmotor.setPower(base * -1);
-        leftmotor2.setPower(base * -1);
+        leftmotor.setPower(base);
+        leftmotor2.setPower(base);
         rightmotor.setPower(base);
         rightmotor2.setPower(base);
         sleep(3200);

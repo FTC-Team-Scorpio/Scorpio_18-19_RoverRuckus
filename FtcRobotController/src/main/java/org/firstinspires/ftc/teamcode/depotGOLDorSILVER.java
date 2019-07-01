@@ -34,7 +34,7 @@ public class depotGOLDorSILVER extends LinearOpMode {
     //Create variable that stores the Vuforia License Key
     private static final String VUFORIA_KEY = "AWcVaaD/////AAABmZwP74eVtklZnIyqakTO2OgZwlPh8T1HsrgYVIEDnOoyHLj2L/rcsf4swWk/DCfwjbmE1BW6y7PmkyMW4qU52qB6ne+cY0gWZ2N7K1xYZpG78NA3EWxYq8B+j81wdDD7viNoWx62SX04i5BDxzZIHpSNFfMUIBmQfEMnczuHyPOLNCN4akso3GDtigRTi+KedV0B3w7+J3yMkpWcgmMhZOMT32WAlASPl8sP2OfinvRZkX+dk0AzuMLrUyD85dbnOBrmHKllIaYp9Vky1xYvKJ96EsNGAnCGFd8KBNNLAZhwkWrBGtzRYuy1R0zLVWDYIkt85yMLBnyuC+TOd+bn+SCsWgib1mVckAhg0D8XGPkq";
     //Function to Run Op Mode
-    public void runOpMode () throws InterruptedException {
+    public void runOpMode ( ) throws InterruptedException {
         //Initialize Vuforia (Refer to "initVuforia" function)
         initVuforia();
         //Initalize TensorFlow (Refer to "initTFOD" function)
