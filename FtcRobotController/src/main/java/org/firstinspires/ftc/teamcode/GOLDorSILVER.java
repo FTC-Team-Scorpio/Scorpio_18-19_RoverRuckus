@@ -48,7 +48,7 @@ public class GOLDorSILVER extends LinearOpMode {
         double base = 0.6;
         //Go Down
         motor3.setPower(1);
-        sleep(9750);
+        sleep(6500);
         motor3.setPower(0);
         //Go Forwards
         leftmotor.setPower(base);
