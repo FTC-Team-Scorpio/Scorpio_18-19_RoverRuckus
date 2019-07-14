@@ -64,10 +64,10 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
     }
     public void armmove () {
         DcMotor atach2 = hardwareMap.get(DcMotor.class, "atach2");
-        if (gamepad2.right_stick_y > 0) {
+        if (gamepad2.right_stick_y < 0) {
             atach2.setPower(0.75);
         }
-        else if (gamepad2.right_stick_y < 0) {
+        else if (gamepad2.right_stick_y > 0) {
             atach2.setPower(-0.75);
         }
         else {
@@ -107,7 +107,7 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
     public void newmotor () {
         //Set the base to the y of the speed joystick (add 1.5 because range is -1 to 0) which is speed
         //not accounting for the turn
-        double base = Range.scale((gamepad1.right_stick_y*-1) + 1.3,0.3,1.3, 0,0.8);
+        double base = Range.scale((-0.8*-1) + 1.3,0.3,1.3, 0,0.8);
         //if slow mode
         if (gamepad1.a) {
             slowmode = true;
@@ -115,6 +115,12 @@ public class myFIRSTJavaOpMode extends LinearOpMode{
         //if deactivate slow mode
         if (gamepad1.y) {
             slowmode = false;
+        }
+        if (slowmode) {
+            base = Range.scale((-0.5*-1) + 1.3,0.3,1.3, 0,0.8);
+        }
+        else {
+            base = Range.scale((-0.8*-1) + 1.3,0.3,1.3, 0,0.8);
         }
         //If left joystick forward
         if (gamepad1.right_stick_y > 0) {
